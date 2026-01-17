@@ -1,0 +1,73 @@
+<div class="summary-cards" *ngIf="summary">
+  <div class="card total-learners">
+    <div class="card-content">
+      <div class="card-icon">
+        <span class="icon">👥</span>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Total Learners Enrolled</div>
+        <div class="card-value">{{ formatNumber(summary.totalLearners) }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card male">
+    <div class="card-content">
+      <div class="card-icon">
+        <span class="icon">👨</span>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Male</div>
+        <div class="card-value">{{ formatNumber(summary.male) }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card female">
+    <div class="card-content">
+      <div class="card-icon">
+        <span class="icon">👩</span>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Female</div>
+        <div class="card-value">{{ formatNumber(summary.female) }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card others">
+    <div class="card-content">
+      <div class="card-icon">
+        <span class="icon">🧑</span>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Others</div>
+        <div class="card-value">{{ formatNumber(summary.others) }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card active-learners">
+    <div class="card-content">
+      <div class="card-icon">
+        <span class="icon">✅</span>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Active Learners</div>
+        <div class="card-value">{{ formatNumber(summary.activeLearners) }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card engaged-learners">
+    <div class="card-content">
+      <div class="card-icon">
+        <span class="icon">📈</span>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Engaged Learners</div>
+        <div class="card-value">{{ formatNumber(summary.engagedLearners) }}</div>
+      </div>
+    </div>
+  </div>
+</div>

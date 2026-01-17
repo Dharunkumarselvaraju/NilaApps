@@ -1,0 +1,350 @@
+.chart-container {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.chart-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ranking-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ranking-controls label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.rank-select {
+  padding: 0.5rem 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  min-width: 140px;
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+}
+
+.chart-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+.ranking-navigation {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+}
+
+.nav-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover:not(:disabled) {
+    background: var(--bg-hover);
+    border-color: var(--accent-color);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.district-tiles-container {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+    
+    &:hover {
+      background: var(--text-secondary);
+    }
+  }
+}
+
+.district-tiles {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  min-width: max-content;
+}
+
+.district-tile {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.25rem;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.2s;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: var(--accent-color);
+  }
+
+  &.rank-1 {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+    border-color: #f59e0b;
+    color: #92400e;
+
+    .rank-position {
+      color: #92400e;
+    }
+
+    .performance-bar {
+      background: #d97706;
+    }
+  }
+
+  &.rank-2 {
+    background: linear-gradient(135deg, #e5e7eb 0%, #f3f4f6 100%);
+    border-color: #9ca3af;
+    color: #374151;
+
+    .rank-position {
+      color: #374151;
+    }
+
+    .performance-bar {
+      background: #6b7280;
+    }
+  }
+
+  &.rank-3 {
+    background: linear-gradient(135deg, #fde68a 0%, #f59e0b 100%);
+    border-color: #d97706;
+    color: #92400e;
+
+    .rank-position {
+      color: #92400e;
+    }
+
+    .performance-bar {
+      background: #d97706;
+    }
+  }
+}
+
+.rank-position {
+  margin-bottom: 0.75rem;
+  
+  .rank-number {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-primary);
+  }
+  
+  .rank-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+  }
+}
+
+.district-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.district-value {
+  margin-bottom: 1rem;
+  
+  .value-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    line-height: 1;
+  }
+  
+  .value-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+}
+
+.performance-indicator {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-primary);
+  border-radius: 3px;
+  overflow: hidden;
+  
+  .performance-bar {
+    height: 100%;
+    background: var(--accent-color);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+}
+
+.no-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+// Tooltip Styles
+.tooltip {
+  position: fixed;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  pointer-events: none;
+  font-size: 0.875rem;
+  min-width: 220px;
+  transform: translate(-50%, -100%);
+
+  .tooltip-header {
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    
+    .tooltip-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    
+    .tooltip-rank {
+      color: var(--accent-color);
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+  }
+  
+  .tooltip-content {
+    .tooltip-row {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      .tooltip-value {
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .chart-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .ranking-controls {
+    justify-content: center;
+  }
+  
+  .district-tile {
+    min-width: 140px;
+    padding: 1rem;
+  }
+  
+  .rank-position .rank-number {
+    font-size: 1.5rem;
+  }
+  
+  .district-value .value-number {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .district-tiles {
+    gap: 0.75rem;
+  }
+  
+  .district-tile {
+    min-width: 120px;
+    padding: 0.875rem;
+  }
+}

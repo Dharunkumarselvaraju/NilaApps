@@ -1,0 +1,47 @@
+<div class="chart-container">
+  <h3 class="chart-title">Pass Percentage</h3>
+  
+  <div class="chart-content" *ngIf="data">
+    <div class="horizontal-bars">      <div class="bar-item" *ngFor="let item of chartData">
+        <div class="bar-info">
+          <span class="bar-label">{{ item.label }}</span>
+          <span class="bar-value">{{ formatNumber(item.value) }}</span>
+        </div>
+        <div class="bar-container" 
+             (mouseenter)="onBarHover($event, item)"
+             (mouseleave)="onBarLeave()">
+          <div 
+            class="bar-fill" 
+            [style.width.%]="item.percentage"
+            [style.background-color]="item.color">
+          </div>
+        </div>
+        <div class="bar-percentage">{{ (item.value / chartData[0].value * 100).toFixed(1) }}%</div>
+      </div>
+    </div>
+  </div>
+  <div class="no-data" *ngIf="!data">
+    <p>No data available</p>
+  </div>
+
+  <!-- Tooltip -->
+  <div class="tooltip" 
+       *ngIf="showTooltip && tooltipData"
+       [style.left.px]="tooltipPosition.x"
+       [style.top.px]="tooltipPosition.y">
+    <div class="tooltip-header">
+      <div class="tooltip-color" [style.background-color]="tooltipData.color"></div>
+      <span class="tooltip-title">{{ tooltipData.label }}</span>
+    </div>
+    <div class="tooltip-content">
+      <div class="tooltip-row">
+        <span>Count: </span>
+        <span class="tooltip-value">{{ formatNumber(tooltipData.value) }}</span>
+      </div>
+      <div class="tooltip-row">
+        <span>Percentage: </span>
+        <span class="tooltip-value">{{ tooltipData.percentage }}%</span>
+      </div>
+    </div>
+  </div>
+</div>

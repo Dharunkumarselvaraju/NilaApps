@@ -1,0 +1,142 @@
+/* You can add global styles to this file, and also import other style files */
+
+// CSS Custom Properties for Theme Support
+:root {
+  // Light theme colors (matching the image design)
+  --bg-primary: #ffffff;
+  --bg-secondary: #ffffff;
+  --bg-hover: #f8fafc;
+  --text-primary: #1a202c;
+  --text-secondary: #718096;
+  --border-color: #e2e8f0;
+  --accent-color: #3b82f6;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --chart-grid: #f7fafc;
+  
+  // Chart specific colors from the image
+  --chart-red: #ef4444;
+  --chart-blue: #3b82f6;
+  --chart-cyan: #06b6d4;
+  --chart-green: #10b981;
+  --chart-orange: #f59e0b;
+  --chart-purple: #8b5cf6;
+  --chart-pink: #ec4899;
+}
+
+[data-theme="dark"] {
+  // Dark theme colors
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-hover: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border-color: #334155;
+  --accent-color: #60a5fa;
+  --success-color: #34d399;
+  --warning-color: #fbbf24;
+  --error-color: #f87171;
+  --chart-grid: #334155;
+  
+  // Chart colors for dark theme
+  --chart-red: #f87171;
+  --chart-blue: #60a5fa;
+  --chart-cyan: #22d3ee;
+  --chart-green: #34d399;
+  --chart-orange: #fbbf24;
+  --chart-purple: #a78bfa;
+  --chart-pink: #f472b6;
+}
+
+// Global styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  background-color: #f7fafc;
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-size: 14px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="dark"] body {
+  background-color: var(--bg-primary);
+}
+
+// Smooth transitions for theme changes
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+// Form elements
+input, select, textarea {
+  font-family: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+// Chart container styles
+.chart-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chart-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+// Utility classes
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+
+// Animation classes
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+.border { border: 1px solid var(--border-color); }
+.rounded { border-radius: 8px; }
+.shadow { box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+.shadow-lg { box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); }

@@ -1,0 +1,95 @@
+<div class="chart-container">
+  <div class="chart-header">
+    <h3 class="chart-title">All District with Ranking</h3>
+    
+    <div class="ranking-controls">
+      <label for="rankBy">District Ranking</label>
+      <select id="rankBy" [(ngModel)]="rankBy" (change)="onRankByChange()" class="rank-select">
+        <option *ngFor="let option of rankByOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="chart-content" *ngIf="data && sortedDistricts.length > 0">
+    <!-- Navigation arrows -->
+    <div class="ranking-navigation">
+      <button class="nav-btn prev" (click)="scrollLeft()" [disabled]="!canScrollLeft">
+        <span>◀</span>
+      </button>
+      
+      <div class="district-tiles-container" #tilesContainer>
+        <div class="district-tiles">          <div 
+            class="district-tile" 
+            *ngFor="let district of sortedDistricts; let i = index"
+            [class.rank-1]="i === 0"
+            [class.rank-2]="i === 1" 
+            [class.rank-3]="i === 2"
+            (mouseenter)="onTileHover($event, district)"
+            (mouseleave)="onTileLeave()">
+            
+            <!-- Rank position -->
+            <div class="rank-position">
+              <div class="rank-number">{{ getOrdinalSuffix(i + 1) }}</div>
+              <div class="rank-label">Rank</div>
+            </div>
+            
+            <!-- District name -->
+            <div class="district-name">{{ district.district }}</div>
+            
+            <!-- District value -->
+            <div class="district-value">
+              <div class="value-number">{{ getFormattedValue(district) }}</div>
+              <div class="value-label">{{ getValueLabel() }}</div>
+            </div>
+            
+            <!-- Performance indicator -->
+            <div class="performance-indicator">
+              <div 
+                class="performance-bar"
+                [style.width.%]="getBarWidth(district)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button class="nav-btn next" (click)="scrollRight()" [disabled]="!canScrollRight">
+        <span>▶</span>
+      </button>
+    </div>
+  </div>
+  <div class="no-data" *ngIf="!data || sortedDistricts.length === 0">
+    <p>No data available</p>
+  </div>
+
+  <!-- Tooltip -->
+  <div class="tooltip" 
+       *ngIf="showTooltip && tooltipData"
+       [style.left.px]="tooltipPosition.x"
+       [style.top.px]="tooltipPosition.y">
+    <div class="tooltip-header">
+      <span class="tooltip-title">{{ tooltipData.district }}</span>
+      <span class="tooltip-rank">Rank #{{ tooltipData.rank }}</span>
+    </div>
+    <div class="tooltip-content">
+      <div class="tooltip-row">
+        <span>Enrolled: </span>
+        <span class="tooltip-value">{{ tooltipData.enrolled | number }}</span>
+      </div>
+      <div class="tooltip-row">
+        <span>Passed: </span>
+        <span class="tooltip-value">{{ tooltipData.passed | number }}</span>
+      </div>
+      <div class="tooltip-row">
+        <span>Pass Rate: </span>
+        <span class="tooltip-value">{{ tooltipData.passRate }}%</span>
+      </div>
+      <div class="tooltip-row">
+        <span>Completion Rate: </span>
+        <span class="tooltip-value">{{ tooltipData.completionRate }}%</span>
+      </div>
+    </div>
+  </div>
+</div>

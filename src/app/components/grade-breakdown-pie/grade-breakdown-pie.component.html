@@ -1,0 +1,48 @@
+<div class="chart-container">
+  <h3 class="chart-title">Learners Details Breakdown</h3>
+  
+  <div class="chart-content" *ngIf="data.length > 0">
+    <div class="pie-container">
+      <svg class="pie-chart" viewBox="0 0 120 120">        <g *ngFor="let segment of pathData; trackBy: trackByGrade">
+          <path
+            [attr.d]="segment.pathData"
+            [attr.fill]="segment.color"
+            class="pie-segment"
+            [title]="segment.label + ': ' + segment.percent + '%'"
+            (mouseenter)="onSliceHover($event, segment)"
+            (mouseleave)="onSliceLeave()">
+          </path>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item" *ngFor="let item of chartData; trackBy: trackByGrade">
+        <div class="legend-color" [style.background-color]="item.color"></div>
+        <div class="legend-info">
+          <span class="legend-percentage">{{ item.percent }}%</span>
+          <span class="legend-label">{{ item.label }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="no-data" *ngIf="data.length === 0">
+    <p>No data available</p>
+  </div>
+
+  <!-- Tooltip -->
+  <div class="tooltip" 
+       *ngIf="showTooltip && tooltipData"
+       [style.left.px]="tooltipPosition.x"
+       [style.top.px]="tooltipPosition.y">
+    <div class="tooltip-header">
+      <div class="tooltip-color" [style.background-color]="tooltipData.color"></div>
+      <span class="tooltip-title">Grade {{ tooltipData.grade }}</span>
+    </div>
+    <div class="tooltip-content">
+      <div class="tooltip-label">{{ tooltipData.label }}</div>
+      <div class="tooltip-value">{{ tooltipData.percentage }}%</div>
+    </div>
+  </div>
+</div>

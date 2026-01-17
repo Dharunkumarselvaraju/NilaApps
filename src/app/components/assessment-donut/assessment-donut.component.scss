@@ -1,0 +1,169 @@
+.chart-content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.donut-container {
+  flex-shrink: 0;
+}
+
+.donut-chart {
+  width: 200px;
+  height: 200px;
+}
+
+.donut-background {
+  opacity: 0.3;
+}
+
+.donut-segment {
+  transition: all 0.8s ease;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.donut-segment:hover {
+  stroke-width: 14;
+  opacity: 0.8;
+}
+
+.center-text-main {
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--text-primary);
+}
+
+.center-text-sub {
+  font-size: 10px;
+  font-weight: 500;
+  fill: var(--text-secondary);
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.legend-percentage {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.legend-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+// Tooltip Styles
+.tooltip {
+  position: fixed;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  pointer-events: none;
+  font-size: 0.875rem;
+  min-width: 160px;
+  transform: translate(-50%, -100%);
+
+  .tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    
+    .tooltip-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+    
+    .tooltip-title {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+  }
+  
+  .tooltip-content {
+    text-align: center;
+    
+    .tooltip-value {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--accent-color);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .chart-content {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .donut-chart {
+    width: 160px;
+    height: 160px;
+  }
+
+  .legend {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .donut-chart {
+    width: 140px;
+    height: 140px;
+  }
+
+  .legend {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .legend-item {
+    min-width: auto;
+    justify-content: center;
+  }
+}

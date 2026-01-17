@@ -1,0 +1,107 @@
+<div class="top-bar">
+  <div class="top-bar-content">
+    <div class="title">
+        <h1 class="dashboard-title">Dashboard</h1>
+    </div>
+    <!-- Left Section -->
+    <div class="left-section">
+      
+      <!-- Period Filter Toggle -->
+      <div class="nav-controls">
+        <button 
+          class="nav-btn"
+          (click)="navigatePeriod(-1)"
+          [disabled]="!canNavigateBack()">
+          <span>◀</span>
+        </button>
+        
+        <div class="period-toggle">
+          <button 
+            class="period-btn"
+            [class.active]="selectedPeriod === 'Monthly'"
+            (click)="setPeriod('Monthly')">
+            Monthly
+          </button>
+          <button 
+            class="period-btn"
+            [class.active]="selectedPeriod === 'Quarterly'"
+            (click)="setPeriod('Quarterly')">
+            Quarterly
+          </button>
+        </div>
+        
+        <button 
+          class="nav-btn"
+          (click)="navigatePeriod(1)"
+          [disabled]="!canNavigateForward()">
+          <span>▶</span>
+        </button>
+      </div>
+      <!-- Center Section -->
+      <div class="center-section">
+        <!-- Date Range Picker -->
+        <div class="control-group">
+          <div class="date-filter">
+            <input 
+              type="date" 
+              class="date-input"
+              [(ngModel)]="startDate"
+              (change)="onDateRangeChange()"
+              id="startDate">
+            <span class="date-separator">-</span>
+            <input 
+              type="date" 
+              class="date-input"
+              [(ngModel)]="endDate"
+              (change)="onDateRangeChange()"
+              id="endDate">
+          </div>
+        </div>
+        
+        <!-- Current Period Display -->
+        <div class="control-group">
+          <div class="current-period">
+            <span class="period-label">{{ getCurrentPeriodLabel() }}</span>
+          </div>
+        </div>
+      </div>    <!-- Right Section -->
+      <div class="right-section">
+        <!-- Year Selector -->
+        <div class="control-group">
+          <select 
+            class="year-select"
+            [(ngModel)]="selectedYear"
+            (change)="onYearChange()">
+            <option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </option>
+          </select>
+        </div>
+  
+        <!-- District Filter -->
+        <div class="control-group">
+          <select 
+            class="district-select"
+            [(ngModel)]="selectedDistrict"
+            (change)="onDistrictChange()">
+            <option *ngFor="let district of districts" [value]="district">
+              {{ district }}
+            </option>
+          </select>
+        </div>
+  
+        <!-- Theme Toggle -->
+        <div class="control-group">
+          <button 
+            class="theme-toggle"
+            (click)="onThemeToggle()"
+            [title]="'Switch to ' + (themeService.getCurrentTheme() === 'light' ? 'dark' : 'light') + ' theme'">
+            <span *ngIf="themeService.getCurrentTheme() === 'light'">🌙</span>
+            <span *ngIf="themeService.getCurrentTheme() === 'dark'">☀️</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

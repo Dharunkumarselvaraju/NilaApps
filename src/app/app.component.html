@@ -1,0 +1,65 @@
+<div class="app-container">  <!-- Top Bar -->
+  <app-top-bar
+    [initialYear]="selectedYear"
+    [initialDistrict]="selectedDistrict"
+    [initialPeriod]="selectedPeriod"
+    [initialDateRange]="selectedDateRange"
+    (periodChange)="onPeriodChange($event)"
+    (districtChange)="onDistrictChange($event)"
+    (yearChange)="onYearChange($event)"
+    (dateRangeChange)="onDateRangeChange($event)"
+    (periodFilterChange)="onPeriodFilterChange($event)">  </app-top-bar>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Error State -->
+    <div class="error-container" *ngIf="error">
+      <div class="error-message">
+        <h3>⚠️ Error</h3>
+        <p>{{ error }}</p>
+        <button class="retry-btn" (click)="loadDashboardData(selectedYear)">Retry</button>
+      </div>
+    </div>
+
+    <!-- Dashboard Content - Always visible when data exists -->
+    <div class="dashboard-content" *ngIf="dashboardData && !error">
+      <!-- Summary Cards -->
+      <section class="summary-section">
+        <app-summary-cards [summary]="dashboardData.summary"></app-summary-cards>
+      </section>
+
+      <!-- Charts Grid -->
+      <section class="charts-grid">
+        <!-- Top Row -->
+        <div class="chart-row top-row">
+          <div class="chart-column course-progress">
+            <app-course-progress-chart 
+              [data]="dashboardData.courseProgress"
+              [selectedDistrict]="selectedDistrict">
+            </app-course-progress-chart>
+          </div>
+          <div class="chart-column pass-stats">
+            <app-pass-stats-chart [data]="dashboardData.passStats"></app-pass-stats-chart>
+          </div>
+        </div>
+
+        <!-- Bottom Row -->
+        <div class="chart-row bottom-row">
+          <div class="chart-column assessment-donut">
+            <app-assessment-donut [data]="dashboardData.assessmentCompletion"></app-assessment-donut>
+          </div>
+          <div class="chart-column grade-breakdown">
+            <app-grade-breakdown-pie [data]="dashboardData.gradeBreakdown"></app-grade-breakdown-pie>
+          </div>
+        </div>
+
+        <!-- Full Width Row -->
+        <div class="chart-row full-width-row">
+          <div class="chart-column district-ranking">
+            <app-district-ranking [data]="dashboardData.districtRanking"></app-district-ranking>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
