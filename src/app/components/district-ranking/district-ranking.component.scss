@@ -142,45 +142,22 @@
     border-color: var(--accent-color);
   }
 
-  &.rank-1 {
-    background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
-    border-color: #f59e0b;
-    color: #92400e;
-
-    .rank-position {
-      color: #92400e;
-    }
-
-    .performance-bar {
-      background: #d97706;
-    }
-  }
-
-  &.rank-2 {
-    background: linear-gradient(135deg, #e5e7eb 0%, #f3f4f6 100%);
-    border-color: #9ca3af;
-    color: #374151;
-
-    .rank-position {
-      color: #374151;
-    }
-
-    .performance-bar {
-      background: #6b7280;
-    }
-  }
-
+  /* Ensure all tiles use the same base styling (do not differentiate top 3)
+     Keep specific rank classes in the template for semantics but render
+     them with the same colors as other tiles. */
+  &.rank-1,
+  &.rank-2,
   &.rank-3 {
-    background: linear-gradient(135deg, #fde68a 0%, #f59e0b 100%);
-    border-color: #d97706;
-    color: #92400e;
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
 
     .rank-position {
-      color: #92400e;
+      color: var(--text-primary);
     }
 
     .performance-bar {
-      background: #d97706;
+      background: var(--accent-color);
     }
   }
 }

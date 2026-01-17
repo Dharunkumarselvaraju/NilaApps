@@ -173,12 +173,18 @@
   color-scheme: dark;
   
   &::-webkit-calendar-picker-indicator {
-    filter: invert(1) brightness(2) opacity(0.9);
-    
+    /* make the native picker icon appear white in dark mode */
+    filter: invert(1) brightness(2) contrast(1.2) opacity(1);
+
     &:hover {
-      filter: invert(1) brightness(2) opacity(1);
+      filter: invert(1) brightness(2) contrast(1.2) opacity(1);
     }
   }
+}
+
+/* Force calendar icon color to white in dark theme (for font/icon elements) */
+[data-theme="dark"] .calendar-icon {
+  color: #ffffff;
 }
 
 // Light theme fallback
