@@ -1,22 +1,48 @@
 <div class="chart-container">
-  <h3 class="chart-title">Pass Percentage</h3>
+  <h3 class="chart-title">Pass Statistics</h3>
   
   <div class="chart-content" *ngIf="data">
-    <div class="horizontal-bars">      <div class="bar-item" *ngFor="let item of chartData">
-        <div class="bar-info">
-          <span class="bar-label">{{ item.label }}</span>
-          <span class="bar-value">{{ formatNumber(item.value) }}</span>
+    <div class="chart-wrapper">
+      <!-- Y Axis Labels -->
+      <div class="y-axis">
+        <div class="y-axis-label" *ngFor="let item of chartData">{{ formatNumber(item.value) }}</div>
+      </div>
+
+      <!-- Chart Area -->
+      <div class="chart-area">
+        <!-- Grid Lines -->
+        <div class="grid-lines">
+          <div class="grid-line" *ngFor="let value of [0, 20, 40, 60, 80, 100]" [style.left.%]="value"></div>
         </div>
-        <div class="bar-container" 
-             (mouseenter)="onBarHover($event, item)"
-             (mouseleave)="onBarLeave()">
-          <div 
-            class="bar-fill" 
-            [style.width.%]="item.percentage"
-            [style.background-color]="item.color">
+
+        <div class="horizontal-bars">
+          <div class="bar-item" *ngFor="let item of chartData">
+            <div class="bar-wrapper">
+              <div class="bar-container" 
+                   (mouseenter)="onBarHover($event, item)"
+                   (mouseleave)="onBarLeave()">
+                <div 
+                  class="bar-fill" 
+                  [style.width.%]="item.percentage"
+                  [style.background-color]="item.color">
+                  <span class="bar-label-inside">{{ item.label }}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="bar-percentage">{{ (item.value / chartData[0].value * 100).toFixed(1) }}%</div>
+
+        <!-- X Axis -->
+        <div class="x-axis-relative">
+          <div class="x-axis-label" *ngFor="let value of [0, 20, 40, 60, 80, 100]; let i = index"
+               [style.left.%]="value"
+               [style.transform]="i === 0 ? 'translateX(-2px)' : i === 5 ? 'translateX(-100%)' : 'translateX(-50%)'">
+            {{ value }}%
+          </div>
+        </div>
+        
+        <!-- X Axis Title -->
+        <div class="x-axis-title">Performance</div>
       </div>
     </div>
   </div>

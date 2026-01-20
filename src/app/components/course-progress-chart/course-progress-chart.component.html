@@ -1,5 +1,11 @@
 <div class="chart-container">
-  <h3 class="chart-title">Course Progress Rate</h3>
+  <div class="chart-header">
+    <h3 class="chart-title">Course Progress Rate</h3>
+    <div class="chart-nav-buttons" *ngIf="isAllDistrict">
+      <button class="nav-btn" (click)="onPrevPage()" [disabled]="!canGoPrev">◀</button>
+      <button class="nav-btn" (click)="onNextPage()" [disabled]="!canGoNext">▶</button>
+    </div>
+  </div>
   
   <!-- Legend -->
   <div class="legend">
@@ -12,25 +18,57 @@
   <!-- Chart -->
   <div class="chart-content">
     <div class="chart" *ngIf="filteredData.length > 0">
-      <div class="y-axis">
-        <div class="y-axis-label" *ngFor="let value of [100, 80, 60, 40, 20, 0]">{{ value }}</div>
-      </div>
-      
-      <div class="chart-bars">
-        <div class="district-group" *ngFor="let district of filteredData; trackBy: trackByDistrict">
-          <div class="bars">
-            <div class="bar-group">              <div 
-                class="bar"
-                *ngFor="let category of categories; trackBy: trackByCategory"
-                [style.height.%]="getDistrictValueForBar(district, category.key)"
-                [style.background-color]="category.color"
-                [title]="category.label + ': ' + getDistrictValue(district, category.key) + '%'"
-                (mouseenter)="onBarHover($event, district, category)"
-                (mouseleave)="onBarLeave()">
+      <div class="chart-area">
+        <div class="y-axis">
+          <div class="y-axis-label" *ngFor="let value of [100, 80, 60, 40, 20, 0]">{{ value }}</div>
+        </div>
+        
+        <div class="chart-main">
+          <div class="chart-bars">
+            <!-- Show highest value only when viewing All Districts -->
+            <ng-container *ngIf="isAllDistrict">
+              <div class="district-group" *ngFor="let item of displayedDistricts; trackBy: trackByDistrict">
+                <div class="bars">
+                  <div class="bar-wrapper">
+                    <div 
+                      class="bar"
+                      [style.height.%]="getDistrictHighestValue(item)"
+                      [style.background-color]="getHighestCategory(item).color"
+                      [title]="getHighestCategory(item).label + ': ' + getHighestCategoryValue(item) + '%'"
+                      (mouseenter)="onBarHover($event, item)"
+                      (mouseleave)="onBarLeave()">
+                    </div>
+                  </div>
+                </div>
               </div>
+            </ng-container>
+
+            <!-- Show all three values when viewing specific district -->
+            <ng-container *ngIf="!isAllDistrict">
+              <div class="district-group" *ngFor="let item of displayedDistricts; trackBy: trackByDistrict">
+                <div class="bars">
+                  <div class="bar-group">              
+                    <div 
+                      class="bar"
+                      *ngFor="let category of categories; trackBy: trackByCategory"
+                      [style.height.%]="getDistrictValueForBar(item, category.key)"
+                      [style.background-color]="category.color"
+                      [title]="category.label + ': ' + getDistrictValue(item, category.key) + '%'"
+                      (mouseenter)="onBarHoverMultiple($event, item, category)"
+                      (mouseleave)="onBarLeave()">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          
+          <!-- District labels below the chart line -->
+          <div class="district-labels-row">
+            <div class="district-label" *ngFor="let item of displayedDistricts; trackBy: trackByDistrict">
+              {{ getDistrictName(item.district) }}
             </div>
           </div>
-          <div class="district-label">{{ getDistrictName(district.district) }}</div>
         </div>
       </div>
       

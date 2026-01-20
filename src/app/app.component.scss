@@ -112,11 +112,11 @@
   
   &.course-progress, &.pass-stats, 
   &.assessment-donut, &.grade-breakdown {
-    min-height: 300px;
+    height: 350px;
   }
   
   &.district-ranking {
-    min-height: 400px;
+    min-height: 200px;
   }
 }
 

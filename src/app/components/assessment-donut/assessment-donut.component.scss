@@ -1,8 +1,66 @@
+.chart-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+}
+
 .chart-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
+  flex: 1;
+}
+
+// Percentage labels positioned around the donut
+.percentage-labels {
+  display: flex;
   justify-content: space-between;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.percentage-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  
+  .percentage-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  
+  .percentage-text {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-align: center;
+    max-width: 80px;
+  }
+  
+  &.not-completed-label {
+    .percentage-value {
+      color: #f97316;
+    }
+  }
+  
+  &.completed-label {
+    .percentage-value {
+      color: #22d3ee;
+    }
+  }
 }
 
 .donut-container {
@@ -10,8 +68,8 @@
 }
 
 .donut-chart {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
 }
 
 .donut-background {
@@ -59,6 +117,7 @@
   height: 16px;
   border-radius: 50%;
   flex-shrink: 0;
+  background-color: currentColor;
 }
 
 .legend-info {

@@ -1,73 +1,73 @@
-<div class="summary-cards" *ngIf="summary">
-  <div class="card total-learners">
-    <div class="card-content">
-      <div class="card-icon">
-        <span class="icon">👥</span>
-      </div>
-      <div class="card-info">
-        <div class="card-label">Total Learners Enrolled</div>
-        <div class="card-value">{{ formatNumber(summary.totalLearners) }}</div>
-      </div>
+<div class="summary-bar" *ngIf="summary">
+
+  <!-- Total Learners -->
+  <div class="summary-item total-learners">
+    <div>
+      <span class="item-label">Total Learner enrolled</span>
+      <span class="item-value">{{ formatNumber(summary.totalLearners) }}</span>
     </div>
   </div>
 
-  <div class="card male">
-    <div class="card-content">
-      <div class="card-icon">
-        <span class="icon">👨</span>
-      </div>
-      <div class="card-info">
-        <div class="card-label">Male</div>
-        <div class="card-value">{{ formatNumber(summary.male) }}</div>
-      </div>
+  <div class="separator separator-cyan"></div>
+
+  <!-- Male -->
+  <div class="summary-item male">
+    <span class="item-icon" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M9.5 11c1.93 0 3.5 1.57 3.5 3.5S11.43 18 9.5 18 6 16.43 6 14.5 7.57 11 9.5 11zm0-2C6.46 9 4 11.46 4 14.5S6.46 20 9.5 20s5.5-2.46 5.5-5.5c0-1.16-.36-2.24-.97-3.13L18 7.41V10h2V4h-6v2h2.59l-3.97 3.97A5.47 5.47 0 0 0 9.5 9z"/>
+      </svg>
+    </span>
+    <div>
+      <span class="item-label">Male</span>
+      <span class="item-value">{{ formatNumber(summary.male) }}</span>
+    </div>
+  </div>
+    
+  <div class="separator separator-pink"></div>
+
+  <!-- Female -->
+  <div class="summary-item female">
+    <span class="item-icon" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 4c2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4 1.79-4 4-4zm0-2C8.69 2 6 4.69 6 8c0 2.97 2.16 5.44 5 5.92V16H8v2h3v3h2v-3h3v-2h-3v-2.08c2.84-.48 5-2.95 5-5.92 0-3.31-2.69-6-6-6z"/>
+      </svg>
+    </span>
+    <div>
+      <span class="item-label">Female</span>
+      <span class="item-value">{{ formatNumber(summary.female) }}</span>
+    </div>
+  </div>
+  <div class="separator separator-purple"></div>
+
+  <!-- Others -->
+  <div class="summary-item others">
+    <span class="item-icon" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+      </svg>
+    </span>
+    <div>
+      <span class="item-label">Others</span>
+      <span class="item-value">{{ formatNumber(summary.others) }}</span>
+    </div>
+  </div>
+  <div class="separator separator-green"></div>
+
+  <!-- Active Learners -->
+  <div class="summary-item active-learners">
+    <div>
+      <span class="item-label">Active Learners</span>
+      <span class="item-value">{{ formatNumber(summary.activeLearners) }}</span>
+    </div>
+  </div>
+  <div class="separator separator-orange"></div>
+
+  <!-- Engaged Learners -->
+  <div class="summary-item engaged-learners">
+    <div>
+      <span class="item-label">Engaged Learners</span>
+      <span class="item-value">{{ formatNumber(summary.engagedLearners) }}</span>
     </div>
   </div>
 
-  <div class="card female">
-    <div class="card-content">
-      <div class="card-icon">
-        <span class="icon">👩</span>
-      </div>
-      <div class="card-info">
-        <div class="card-label">Female</div>
-        <div class="card-value">{{ formatNumber(summary.female) }}</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card others">
-    <div class="card-content">
-      <div class="card-icon">
-        <span class="icon">🧑</span>
-      </div>
-      <div class="card-info">
-        <div class="card-label">Others</div>
-        <div class="card-value">{{ formatNumber(summary.others) }}</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card active-learners">
-    <div class="card-content">
-      <div class="card-icon">
-        <span class="icon">✅</span>
-      </div>
-      <div class="card-info">
-        <div class="card-label">Active Learners</div>
-        <div class="card-value">{{ formatNumber(summary.activeLearners) }}</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card engaged-learners">
-    <div class="card-content">
-      <div class="card-icon">
-        <span class="icon">📈</span>
-      </div>
-      <div class="card-info">
-        <div class="card-label">Engaged Learners</div>
-        <div class="card-value">{{ formatNumber(summary.engagedLearners) }}</div>
-      </div>
-    </div>
-  </div>
 </div>

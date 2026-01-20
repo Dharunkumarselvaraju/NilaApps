@@ -290,6 +290,29 @@
 }
 
 // Responsive design
+@media (max-width: 1200px) {
+  .chart-container {
+    padding: 1.25rem;
+  }
+  
+  .district-tile {
+    min-width: 150px;
+    padding: 1.15rem;
+  }
+  
+  .rank-position .rank-number {
+    font-size: 1.6rem;
+  }
+  
+  .district-value .value-number {
+    font-size: 1.15rem;
+  }
+  
+  .district-name {
+    font-size: 0.95rem;
+  }
+}
+
 @media (max-width: 768px) {
   .chart-header {
     flex-direction: column;
@@ -301,27 +324,88 @@
     justify-content: center;
   }
   
+  .district-tiles-container {
+    max-height: 280px;
+  }
+  
   .district-tile {
-    min-width: 140px;
+    min-width: 130px;
     padding: 1rem;
   }
   
   .rank-position .rank-number {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
   
   .district-value .value-number {
-    font-size: 1.125rem;
+    font-size: 1rem;
+  }
+  
+  .district-name {
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
-  .district-tiles {
+  .chart-container {
+    padding: 1rem;
+  }
+  
+  .chart-header {
+    flex-direction: column;
     gap: 0.75rem;
   }
   
+  .ranking-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .rank-select {
+    min-width: 100%;
+  }
+  
+  .nav-btn {
+    min-width: 36px;
+    height: 36px;
+    padding: 0.5rem;
+  }
+  
+  .district-tiles {
+    gap: 0.65rem;
+  }
+  
   .district-tile {
-    min-width: 120px;
-    padding: 0.875rem;
+    min-width: 110px;
+    padding: 0.8rem;
+  }
+  
+  .rank-position {
+    margin-bottom: 0.5rem;
+  }
+  
+  .rank-position .rank-number {
+    font-size: 1.3rem;
+  }
+  
+  .rank-position .rank-label {
+    font-size: 0.7rem;
+  }
+  
+  .district-name {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .district-value {
+    margin-bottom: 0.75rem;
+  }
+  
+  .district-value .value-number {
+    font-size: 0.95rem;
+  }
+  
+  .district-value .value-label {
+    font-size: 0.7rem;
   }
 }

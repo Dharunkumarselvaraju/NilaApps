@@ -57,26 +57,9 @@
               id="endDate">
           </div>
         </div>
-        
-        <!-- Current Period Display -->
-        <div class="control-group">
-          <div class="current-period">
-            <span class="period-label">{{ getCurrentPeriodLabel() }}</span>
-          </div>
-        </div>
-      </div>    <!-- Right Section -->
+      </div>    
+      <!-- Right Section -->
       <div class="right-section">
-        <!-- Year Selector -->
-        <div class="control-group">
-          <select 
-            class="year-select"
-            [(ngModel)]="selectedYear"
-            (change)="onYearChange()">
-            <option *ngFor="let year of years" [value]="year">
-              {{ year }}
-            </option>
-          </select>
-        </div>
   
         <!-- District Filter -->
         <div class="control-group">

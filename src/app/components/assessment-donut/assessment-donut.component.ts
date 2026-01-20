@@ -12,6 +12,7 @@ import { AssessmentCompletion } from '../../models/dashboard-response.model';
 })
 export class AssessmentDonutComponent implements OnChanges {
   @Input() data: AssessmentCompletion | null = null;
+  @Input() selectedDistrict: string = 'All District';
   
   private _chartData: any[] = [];
   private _completedOffset = 0;
@@ -23,8 +24,13 @@ export class AssessmentDonutComponent implements OnChanges {
   tooltipData: any = null;
   tooltipPosition = { x: 0, y: 0 };
 
+  // Display text for center of donut
+  get centerText(): string {
+    return this.selectedDistrict === 'All District' ? 'All Districts' : this.selectedDistrict;
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data'] && this.data) {
+    if ((changes['data'] || changes['selectedDistrict']) && this.data) {
       this.updateChartCalculations();
     }
   }
@@ -32,17 +38,17 @@ export class AssessmentDonutComponent implements OnChanges {
   private updateChartCalculations(): void {
     if (!this.data) return;
     
-    // Update chart data
+    // Update chart data - colors match Figma (cyan for completed, orange for not completed)
     this._chartData = [
       {
         label: 'Assessment completed',
         value: this.data.completedPercent,
-        color: '#10b981'
+        color: '#22d3ee'
       },
       {
         label: 'Assessment not completed',
         value: this.data.notCompletedPercent,
-        color: '#ef4444'
+        color: '#f97316'
       }
     ];
 
@@ -51,7 +57,7 @@ export class AssessmentDonutComponent implements OnChanges {
     this._completedOffset = circumference - (this.data.completedPercent / 100) * circumference;
     
     const completedLength = (this.data.completedPercent / 100) * circumference;
-    this._notCompletedOffset = circumference - (this.data.notCompletedPercent / 100) * circumference - completedLength;
+    this._notCompletedOffset = circumference - (this.data.notCompletedPercent / 100) * circumference;
     
     this._rotationAngle = -90 + (this.data.completedPercent * 3.6);
   }

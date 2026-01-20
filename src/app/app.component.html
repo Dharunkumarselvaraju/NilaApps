@@ -46,10 +46,16 @@
         <!-- Bottom Row -->
         <div class="chart-row bottom-row">
           <div class="chart-column assessment-donut">
-            <app-assessment-donut [data]="dashboardData.assessmentCompletion"></app-assessment-donut>
+            <app-assessment-donut 
+              [data]="dashboardData.assessmentCompletion"
+              [selectedDistrict]="selectedDistrict">
+            </app-assessment-donut>
           </div>
           <div class="chart-column grade-breakdown">
-            <app-grade-breakdown-pie [data]="dashboardData.gradeBreakdown"></app-grade-breakdown-pie>
+            <app-grade-breakdown-pie 
+              [data]="dashboardData.gradeBreakdown"
+              [selectedDistrict]="selectedDistrict">
+            </app-grade-breakdown-pie>
           </div>
         </div>
 

@@ -42,10 +42,19 @@ export class DashboardService {
 
   // Raw dashboard data cache
   private rawDataCache = new Map<number, DashboardResponse>();
+  private mergedData: any = null;
+
   constructor(private http: HttpClient) {}
 
   getDashboard(year: number = 2024): Observable<DashboardResponse> {
-    return this.http.get<DashboardResponse>(`/data/dashboard_${year}.json`);
+    return this.http.get<any>('/data/dashboard.json').pipe(
+      map(data => {
+        if (this.mergedData === null) {
+          this.mergedData = data;
+        }
+        return this.mergedData[year.toString()];
+      })
+    );
   }
   // Get filtered dashboard data based on all current filter settings
   getFilteredDashboard(): Observable<DashboardResponse> {
@@ -104,9 +113,61 @@ export class DashboardService {
     // Apply basic district filter to course progress
     if (filters.district !== 'All District') {
       filteredData.courseProgress = this.filterCourseProgressByDistrict(data.courseProgress, filters.district);
+      
+      // Calculate assessment completion for selected district from districtRanking data
+      const districtData = data.districtRanking?.districts?.find(d => d.district === filters.district);
+      if (districtData) {
+        // Calculate completion percentage based on district data
+        const completedPercent = Math.round((districtData.assessmentCompleted / districtData.enrolled) * 100);
+        filteredData.assessmentCompletion = {
+          completedPercent: completedPercent,
+          notCompletedPercent: 100 - completedPercent
+        };
+        
+        // Calculate grade breakdown based on pass rate for the district
+        const passRate = Math.round((districtData.passed / districtData.enrolled) * 100);
+        filteredData.gradeBreakdown = this.calculateGradeBreakdown(passRate);
+        
+        // Update summary for selected district
+        filteredData.summary = {
+          totalLearners: districtData.enrolled,
+          male: districtData.male,
+          female: districtData.female,
+          others: districtData.others,
+          activeLearners: Math.round(districtData.enrolled * 0.45),
+          engagedLearners: Math.round(districtData.enrolled * 0.04)
+        };
+        
+        // Update pass stats for selected district
+        filteredData.passStats = {
+          overallLearners: districtData.enrolled,
+          assessmentTaken: districtData.assessmentCompleted,
+          passed: districtData.passed,
+          failed: districtData.assessmentCompleted - districtData.passed
+        };
+      }
     }
 
     return filteredData;
+  }
+
+  // Calculate grade breakdown based on pass rate
+  private calculateGradeBreakdown(passRate: number): any[] {
+    // Distribute grades based on pass rate
+    // Higher pass rate = more A and B grades
+    const aGrade = Math.min(Math.round(passRate * 0.4), 60);
+    const bGrade = Math.min(Math.round(passRate * 0.35), 30);
+    const cGrade = Math.min(Math.round((100 - passRate) * 0.4), 20);
+    const dGrade = Math.min(Math.round((100 - passRate) * 0.35), 15);
+    const eGrade = Math.max(100 - aGrade - bGrade - cGrade - dGrade, 0);
+    
+    return [
+      { grade: "A", label: "A - Grade (>80)", percent: aGrade },
+      { grade: "B", label: "B - Grade (>60)", percent: bGrade },
+      { grade: "C", label: "C - Grade (>50)", percent: cGrade },
+      { grade: "D", label: "D - Grade (>30)", percent: dGrade },
+      { grade: "E", label: "E - Grade (0)", percent: eGrade }
+    ];
   }
 
   private filterCourseProgressByDistrict(courseProgress: any[], district: string): any[] {

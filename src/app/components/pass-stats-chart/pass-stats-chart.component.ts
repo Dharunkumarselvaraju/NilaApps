@@ -32,18 +32,13 @@ export class PassStatsChartComponent implements OnChanges {
       return;
     }
     
-    const maxValue = Math.max(
-      this.data.overallLearners,
-      this.data.assessmentTaken,
-      this.data.passed,
-      this.data.failed
-    );
+    const maxValue = this.data.overallLearners;
 
     this._chartData = [
       {
         label: 'Overall Learners',
         value: this.data.overallLearners,
-        percentage: (this.data.overallLearners / maxValue) * 100,
+        percentage: 100,
         color: '#3b82f6'
       },
       {
@@ -79,11 +74,14 @@ export class PassStatsChartComponent implements OnChanges {
 
   // Tooltip methods
   onBarHover(event: MouseEvent, item: any): void {
-    const rect = (event.target as HTMLElement).getBoundingClientRect();
-    this.tooltipPosition = {
-      x: event.clientX,
-      y: event.clientY - 10
-    };
+    const barElement = (event.target as HTMLElement).closest('.bar-container');
+    if (barElement) {
+      const rect = barElement.getBoundingClientRect();
+      this.tooltipPosition = {
+        x: rect.left + rect.width / 2,
+        y: rect.top - 10
+      };
+    }
     
     this.tooltipData = {
       label: item.label,

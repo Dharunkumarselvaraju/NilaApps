@@ -3,7 +3,8 @@
   
   <div class="chart-content" *ngIf="data.length > 0">
     <div class="pie-container">
-      <svg class="pie-chart" viewBox="0 0 120 120">        <g *ngFor="let segment of pathData; trackBy: trackByGrade">
+      <svg class="pie-chart" viewBox="0 0 160 120">
+        <g *ngFor="let segment of pathData; trackBy: trackByGrade">
           <path
             [attr.d]="segment.pathData"
             [attr.fill]="segment.color"
@@ -13,6 +14,17 @@
             (mouseleave)="onSliceLeave()">
           </path>
         </g>
+        <!-- Percentage labels on slices -->
+        <g *ngFor="let segment of pathData; trackBy: trackByGrade">
+          <text
+            [attr.x]="segment.labelX"
+            [attr.y]="segment.labelY"
+            class="slice-label"
+            text-anchor="middle"
+            dominant-baseline="middle">
+            {{ segment.percent }}%
+          </text>
+        </g>
       </svg>
     </div>
 
@@ -20,10 +32,7 @@
     <div class="legend">
       <div class="legend-item" *ngFor="let item of chartData; trackBy: trackByGrade">
         <div class="legend-color" [style.background-color]="item.color"></div>
-        <div class="legend-info">
-          <span class="legend-percentage">{{ item.percent }}%</span>
-          <span class="legend-label">{{ item.label }}</span>
-        </div>
+        <span class="legend-label">{{ item.label }}</span>
       </div>
     </div>
   </div>

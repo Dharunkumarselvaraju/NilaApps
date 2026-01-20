@@ -2,6 +2,18 @@
   <h3 class="chart-title">Average Assessment Score</h3>
   
   <div class="chart-content" *ngIf="data">
+    <!-- Percentage labels outside donut -->
+    <div class="percentage-labels">
+      <div class="percentage-label not-completed-label">
+        <span class="percentage-value">{{ data.notCompletedPercent }}%</span>
+        <span class="percentage-text">Assessment not completed</span>
+      </div>
+      <div class="percentage-label completed-label">
+        <span class="percentage-value">{{ data.completedPercent }}%</span>
+        <span class="percentage-text">Assessment completed</span>
+      </div>
+    </div>
+    
     <div class="donut-container">
       <svg class="donut-chart" viewBox="0 0 120 120">
         <circle
@@ -12,16 +24,17 @@
           fill="none"
           stroke="var(--chart-grid)"
           stroke-width="12">
-        </circle>          <!-- Completed segment -->
+        </circle>
+        
+        <!-- Completed segment (cyan/teal) -->
         <circle
           class="donut-segment completed"
           cx="60"
           cy="60"
           r="45"
           fill="none"
-          stroke="#10b981"
+          stroke="#22d3ee"
           stroke-width="12"
-          stroke-linecap="round"
           [style.stroke-dasharray]="strokeDashArray"
           [style.stroke-dashoffset]="completedOffset"
           transform="rotate(-90 60 60)"
@@ -29,37 +42,28 @@
           (mouseleave)="onSegmentLeave()">
         </circle>
         
-        <!-- Not completed segment -->
+        <!-- Not completed segment (orange) -->
         <circle
           class="donut-segment not-completed"
           cx="60"
           cy="60"
           r="45"
           fill="none"
-          stroke="#ef4444"
+          stroke="#f97316"
           stroke-width="12"
-          stroke-linecap="round"
           [style.stroke-dasharray]="strokeDashArray"
           [style.stroke-dashoffset]="notCompletedOffset"
           [style.transform]="'rotate(' + rotationAngle + 'deg)'"
+          transform-origin="60 60"
           (mouseenter)="onSegmentHover($event, 'notCompleted')"
           (mouseleave)="onSegmentLeave()">
-        </circle><!-- Center text -->
-        <text x="60" y="55" text-anchor="middle" class="center-text-main">All Districts</text>
-        <text x="60" y="70" text-anchor="middle" class="center-text-sub" *ngIf="data">{{ data.completedPercent }}% Complete</text>
+        </circle>
+        
+        <!-- Center text -->
+        <text x="60" y="60" text-anchor="middle" dominant-baseline="middle" class="center-text-main">{{ centerText }}</text>
       </svg>
     </div>
 
-    <!-- Legend -->
-    <div class="legend">
-      <div class="legend-item" *ngFor="let item of chartData">
-        <div class="legend-color" [style.background-color]="item.color"></div>
-        <div class="legend-info">
-          <span class="legend-percentage">{{ item.value }}%</span>
-          <span class="legend-label">{{ item.label }}</span>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="no-data" *ngIf="!data">
     <p>No data available</p>

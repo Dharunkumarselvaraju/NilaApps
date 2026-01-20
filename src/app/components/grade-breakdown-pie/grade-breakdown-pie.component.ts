@@ -12,8 +12,10 @@ import { GradeBreakdown } from '../../models/dashboard-response.model';
 })
 export class GradeBreakdownPieComponent implements OnChanges {
   @Input() data: GradeBreakdown[] = [];
+  @Input() selectedDistrict: string = 'All District';
 
-  colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#6b7280'];
+  // Updated colors to match Figma design
+  colors = ['#60a5fa', '#10b981', '#f59e0b', '#f87171', '#94a3b8'];
   
   private _chartData: any[] = [];
   private _pathData: any[] = [];
@@ -24,7 +26,7 @@ export class GradeBreakdownPieComponent implements OnChanges {
   tooltipPosition = { x: 0, y: 0 };
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
+    if (changes['data'] || changes['selectedDistrict']) {
       this.updateChartData();
     }
   }
@@ -40,31 +42,44 @@ export class GradeBreakdownPieComponent implements OnChanges {
 
   private updatePathData(): void {
     let cumulativePercentage = 0;
+    const centerX = 60;
+    const centerY = 60;
+    const radius = 40;
+    const labelRadius = 55; // Radius for label positioning
+
     this._pathData = this._chartData.map(item => {
       const startAngle = cumulativePercentage * 3.6;
       const endAngle = (cumulativePercentage + item.percent) * 3.6;
+      const midAngle = (startAngle + endAngle) / 2;
       cumulativePercentage += item.percent;
 
       const startAngleRad = (startAngle - 90) * Math.PI / 180;
       const endAngleRad = (endAngle - 90) * Math.PI / 180;
+      const midAngleRad = (midAngle - 90) * Math.PI / 180;
 
       const largeArcFlag = item.percent > 50 ? 1 : 0;
 
-      const x1 = 60 + 40 * Math.cos(startAngleRad);
-      const y1 = 60 + 40 * Math.sin(startAngleRad);
-      const x2 = 60 + 40 * Math.cos(endAngleRad);
-      const y2 = 60 + 40 * Math.sin(endAngleRad);
+      const x1 = centerX + radius * Math.cos(startAngleRad);
+      const y1 = centerY + radius * Math.sin(startAngleRad);
+      const x2 = centerX + radius * Math.cos(endAngleRad);
+      const y2 = centerY + radius * Math.sin(endAngleRad);
+
+      // Calculate label position (outside the slice)
+      const labelX = centerX + labelRadius * Math.cos(midAngleRad);
+      const labelY = centerY + labelRadius * Math.sin(midAngleRad);
 
       const pathData = [
-        'M', 60, 60,
+        'M', centerX, centerY,
         'L', x1, y1,
-        'A', 40, 40, 0, largeArcFlag, 1, x2, y2,
+        'A', radius, radius, 0, largeArcFlag, 1, x2, y2,
         'Z'
       ].join(' ');
 
       return {
         ...item,
-        pathData
+        pathData,
+        labelX,
+        labelY
       };
     });
   }
